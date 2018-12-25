@@ -1,5 +1,6 @@
 import argparse
 from plugins.scan import Scanner
+from plugins.viewer import ViewRF
 import sys
 
 # parser = argparse.ArgumentParser(description='A tool for misusing SDRs')
@@ -24,5 +25,15 @@ if scan:
 		print("Invalid arguments!")
 		exit(1)
 	plugin = Scanner(int(sys.argv[2]), int(sys.argv[3]))
-	plugin.start()
 	
+
+if sys.argv[1] == "view":
+	# print bar graph of signal for a frequency
+	if len(sys.argv) != 3:
+		rint("Invalid arguments!")
+		exit(1)
+	
+	plugin = ViewRF(int(sys.argv[2]))
+
+
+plugin.start()
