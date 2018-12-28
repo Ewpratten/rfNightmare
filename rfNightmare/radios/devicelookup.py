@@ -5,6 +5,12 @@ import os
 def getDevices():
 	device_re = re.compile("Bus\s+(?P<bus>\d+)\s+Device\s+(?P<device>\d+).+ID\s(?P<id>\w+:\w+)\s(?P<tag>.+)$", re.I)
 	df = subprocess.check_output("lsusb").decode()
+	# try:
+	# 	df = subprocess.check_output("lsusb").decode()
+	# except:
+	# 	print("Password required")
+	# 	df = subprocess.check_output(["sudo", "lsusb"]).decode()
+	
 	devices = []
 	for i in df.split('\n'):
 		if i:

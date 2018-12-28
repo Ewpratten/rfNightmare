@@ -18,10 +18,12 @@ class RTLsdr(object):
 		if not self.__loadDevice():
 			devl.getAccess(devl.findSDR(devl.getDevices()))
 			self.__loadDevice()
+		
 		# Set up sdr
 		self.setParams(rate, freq, correction, gain)
 	
 	def __loadDevice(self):
+		# self.radio = RtlSdr()
 		try:
 			self.radio = RtlSdr()
 			return True
@@ -33,7 +35,10 @@ class RTLsdr(object):
 	
 	def readPSD(self,width:int):
 		samples = self.read(width)
-		return psd(samples, NFFT=1024, Fs=self.radio.sample_rate/1e6, Fc=self.radio.center_freq/1e6, return_line=True)
+		try:
+			return psd(samples, NFFT=1024, Fs=self.radio.sample_rate/1e6, Fc=self.radio.center_freq/1e6, return_line=True)
+		except:
+			return 0,0,None
 	
 	def setParams(self, rate, freq, correction, gain):
 		self.radio.sample_rate     = rate
